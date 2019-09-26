@@ -1,0 +1,1 @@
+web: nodemon transpiled/index.js
