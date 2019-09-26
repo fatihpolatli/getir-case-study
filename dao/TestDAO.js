@@ -17,34 +17,93 @@ class TestDAO {
         console.log("2")
     }
 
-    findAll(callback) {
+    findAll(callback, minVal, maxVal, startDateParam, endDateParam) {
 
-       
-        // var rrecord = new Record();
 
-/*
-        Record.find({}, null,{limit:10}).then(function ( docs) {
-           
+        let minValue = minVal | 0;
+        let maxValue = minVal | 0;
+
+        let startDate = new Date(startDateParam);
+        let endDate = new Date(endDateParam);
+
+
+
+        this.Record.aggregate([
+            {
+                $project: {
+
+                    totalCount: { $sum: "$counts" },
+                    key: "$key",
+                    createdAt: "$createdAt"
+                }
+            },
+            {
+                $match: {
+                    totalCount: {
+                        $gt: minValue,
+                        $lt: maxValue
+                    },
+                    createdAt: {
+                        $gt: startDate,
+                        $lt: endDate
+                    }
+                }
+            },
+            {
+                $limit: 10
+            }
+        ]).then(function (docs) {
+
             callback(docs);
         });
-*/
-
-this.Record.aggregate([
-    {
-        $project:{
-           
-            totalCount:{$sum:"$counts"},
-            key:"$key",
-            createdAt:"$createdAt"
-        }
-    },
-    {
-        $limit:10
+        //console.log(t);
     }
-]).then(function ( docs) {
-           
-    callback(docs);
-});
+
+    findAllWithData(postData, callback) {
+
+
+        let minValue = postData.minCount;
+        let maxValue = postData.maxCount;
+
+        let startDate = new Date(postData.startDate);
+        let endDate = new Date(postData.endDate);
+
+        console.log(minValue, maxValue, startDate, endDate)
+
+        this.Record.aggregate([
+            {
+                $project: {
+
+                    totalCount: { $sum: "$counts" },
+                    key: "$key",
+                    createdAt: "$createdAt"
+                }
+            },
+            {
+                $match: {
+
+                    $and: [{
+                        totalCount: {
+                            $gt: minValue,
+                            $lt: maxValue
+                        }
+                    },
+                    {
+                        createdAt: {
+                            $gt: startDate,
+                            $lt: endDate
+                        }
+                    }]
+
+                }
+            },
+            {
+                $limit: 10
+            }
+        ]).then(function (docs) {
+
+            callback(docs);
+        });
         //console.log(t);
     }
 
