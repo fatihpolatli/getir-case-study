@@ -1,28 +1,21 @@
-import  TestDAO from "../dao/TestDAO";
+import TestDAO from "../dao/TestDAO";
 
-class TestService{
+class TestService {
 
-    constructor(){
+    constructor() {
 
 
     }
 
-    findAll(callback){
+
+
+    findAll(postData, callback) {
 
         var testDao = new TestDAO();
-         testDao.findAll(function(data){
+        testDao.findAll(postData, function (data) {
 
             callback(data);
-         });
-    }
-
-    findAllWithData(postData, callback){
-
-        var testDao = new TestDAO();
-         testDao.findAllWithData(postData,function(data){
-
-            callback(data);
-         });
+        });
     }
 }
 

@@ -7,18 +7,6 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import apiRouter from './routes/api';
 
-/*
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-
-var apiRouter = require("./routes/api");
-
-var mongooseConnect = require("./config/MongooseConnectionConfig");
-var mongooseSchemas = require("./config/TestDataSchema");
-*/
 var app = express();
 
 // view engine setup
@@ -33,8 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(process.env.PORT || 3000);
 
-//app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+
 app.use("/api", apiRouter);
 
 // catch 404 and forward to error handler
@@ -50,7 +37,14 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log("erre")
+console.log(err)
+  const responseObject  = {
+
+    msg: err.message,
+    code: err.status || 500
+  };
+  res.send(responseObject);
 });
 
 export default app;

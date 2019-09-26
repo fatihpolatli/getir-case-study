@@ -1,26 +1,29 @@
 import mongoose from 'mongoose';
 
-class TestDaSchemas {
+class TestDataSchema {
   constructor() {
 
-  
+
 
   }
 
-  get record(){
+  getRecord() {
+
 
     var Schema = mongoose.Schema;
 
-    var record = new Schema({
+    this.record = new Schema({
       key: String,
-      ttoalCount : Number,
+      totalCount: Number,
       createdAt: String
     });
 
-    return record;
+
+
+    return this.record;
   }
 
-  
+
 }
 
-export default TestDaSchemas;
+export default TestDataSchema;
