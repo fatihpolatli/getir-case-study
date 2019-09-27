@@ -10,6 +10,8 @@ then
 
 default port is `3000`
 
+Request path is `/api`
+
 heroku demo address
 
 `https://getir-app.herokuapp.com`
